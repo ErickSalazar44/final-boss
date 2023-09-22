@@ -5,16 +5,21 @@ import ProductInf from "../components/Product_id/ProductInf";
 import SilimartProducts from "../components/Product_id/SilimartProducts";
 import "../components/Product_id/style/productBody.css";
 import SliderImgs from "../components/Product_id/SliderImgs";
-
+import Loading from '../components/Loading/Loading'
 
 const ProductIdPage = () => {
     const { id } = useParams();
     const baseUrl = "https://e-commerce-api-v2.academlo.tech/api/v1";
-    const [product, getProductById] = useFetch(baseUrl);
+    const [product, getProductById, ,loading] = useFetch(baseUrl);
 
     useEffect(() => {
         getProductById(`/products/${id}`);
     }, [id]);
+
+    if (loading) {
+        return <Loading/>
+    }
+
     return (
         <div className='productBody'>
             <div className='productBody__section--product'>

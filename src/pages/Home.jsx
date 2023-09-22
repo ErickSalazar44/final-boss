@@ -4,8 +4,16 @@ import "../components/Home/contenedorProducts.css";
 import { useState } from "react";
 import FilterCategori from "../components/Home/FilterCategori";
 import FilterPrice from "../components/Home/FilterPrice";
+import Loading from "../components/Loading/Loading";
 const Home = () => {
-    const productsG = useSelector((state) => state.productsG);
+    // Estado global de los productos, fue ejecutado en App.jsx 
+    // esto trae los productos del estado global
+    const productsG = useSelector((state) => state.productsG.data);
+
+    // loading del estado global mientras llegan los productos 
+    const { loading } = useSelector((state) => state.productsG);
+
+    console.log(loading)
 
     const [priceMinMax, setPriceMinMax] = useState({ min: 0, max: Infinity });
 
@@ -31,6 +39,11 @@ const Home = () => {
     const cbFilterPrice = (prod) => {
 
         return priceMinMax.min <= prod.price && priceMinMax.max >= prod.price
+    }
+
+
+    if (loading) {
+        return <Loading/>
     }
 
     return (
